@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reception | Grand Hotel</title>
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="manager.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand">Grand Hotel<small>Reception</small></div>
+    <nav id="nav">
+      <button class="active" data-target="register">Register Guest</button>
+      <button data-target="reserve">Make Reservation</button>
+      <button data-target="availability">Room Availability</button>
+      <button data-target="checkin">Check In</button>
+      <button data-target="checkout">Check Out</button>
+      <button data-target="payment">Record Payment</button>
+      <button data-target="records">Guest Records</button>
+      <button data-target="enquiries">Enquiries</button>
+    </nav>
+    <a href="login.html" class="logout">Log out</a>
+  </aside>
+
+  <main class="content">
+
+    <!-- 1. REGISTER GUEST -->
+    <section id="register" class="panel active">
+      <h2>Register a Guest</h2>
+      <div class="card">
+        <div class="grid">
+          <div><label>Full name</label><input type="text" id="gName"></div>
+          <div><label>Phone</label><input type="text" id="gPhone"></div>
+          <div><label>Email</label><input type="text" id="gEmail"></div>
+          <div><label>ID type</label>
+            <select id="gIdType">
+              <option>Ghana Card</option>
+              <option>Passport</option>
+              <option>Driver's License</option>
+            </select>
+          </div>
+          <div><label>ID number</label><input type="text" id="gIdNo"></div>
+          <div><label>Country</label><input type="text" id="gCountry" value="Ghana"></div>
+        </div>
+        <button id="registerBtn" class="primary">Register Guest</button>
+        <p id="registerMsg" class="msg"></p>
+      </div>
+    </section>
+
+    <!-- 2. RESERVATION -->
+    <section id="reserve" class="panel">
+      <h2>Make a Reservation</h2>
+      <div class="card">
+        <div class="grid">
+          <div><label>Guest</label><select id="rGuest"></select></div>
+          <div><label>Room (available only)</label><select id="rRoom"></select></div>
+          <div><label>Arrival date</label><input type="date" id="rFrom"></div>
+          <div><label>Departure date</label><input type="date" id="rTo"></div>
+        </div>
+        <p id="rTotal" class="msg"></p>
+        <button id="reserveBtn" class="primary">Confirm Reservation</button>
+        <p id="reserveMsg" class="msg"></p>
+      </div>
+    </section>
+
+    <!-- 3. AVAILABILITY -->
+    <section id="availability" class="panel">
+      <h2>Check Room Availability</h2>
+      <div class="stats" id="availStats"></div>
+      <div class="card scroll">
+        <select id="availFilter">
+          <option value="All">All rooms</option>
+          <option>Available</option>
+          <option>Occupied</option>
+          <option>Maintenance</option>
+        </select>
+        <table>
+          <thead><tr><th>Room</th><th>Type</th><th>Price / night</th><th>Status</th></tr></thead>
+          <tbody id="availBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4. CHECK IN -->
+    <section id="checkin" class="panel">
+      <h2>Check Guests In</h2>
+      <div class="card scroll">
+        <table>
+          <thead><tr><th>ID</th><th>Guest</th><th>Room</th><th>Dates</th><th>Action</th></tr></thead>
+          <tbody id="checkinBody"></tbody>
+        </table>
+        <p id="checkinMsg" class="msg"></p>
+      </div>
+    </section>
+
+    <!-- 5. CHECK OUT -->
+    <section id="checkout" class="panel">
+      <h2>Check Guests Out</h2>
+      <div class="card scroll">
+        <table>
+          <thead><tr><th>ID</th><th>Guest</th><th>Room</th><th>Balance</th><th>Action</th></tr></thead>
+          <tbody id="checkoutBody"></tbody>
+        </table>
+        <p id="checkoutMsg" class="msg"></p>
+      </div>
+    </section>
+
+    <!-- 6. PAYMENT -->
+    <section id="payment" class="panel">
+      <h2>Record a Payment</h2>
+      <div class="card">
+        <div class="grid">
+          <div><label>Booking</label><select id="pBooking"></select></div>
+          <div><label>Amount (GHS)</label><input type="number" id="pAmount" min="1"></div>
+          <div><label>Method</label>
+            <select id="pMethod">
+              <option>Cash</option>
+              <option>Card</option>
+              <option>Mobile Money</option>
+            </select>
+          </div>
+        </div>
+        <button id="payBtn" class="primary">Record Payment</button>
+        <p id="payMsg" class="msg"></p>
+      </div>
+      <div class="card scroll">
+        <h3>Payments recorded</h3>
+        <table>
+          <thead><tr><th>Receipt</th><th>Booking</th><th>Amount</th><th>Method</th></tr></thead>
+          <tbody id="payBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 7. GUEST RECORDS -->
+    <section id="records" class="panel">
+      <h2>Update Guest Records</h2>
+      <div class="card scroll">
+        <input type="text" id="searchGuest" placeholder="Search by name or phone">
+        <table>
+          <thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Action</th></tr></thead>
+          <tbody id="guestsBody"></tbody>
+        </table>
+      </div>
+      <div class="card" id="editBox" style="display:none">
+        <h3 id="editTitle">Edit guest</h3>
+        <div class="grid">
+          <div><label>Full name</label><input type="text" id="eName"></div>
+          <div><label>Phone</label><input type="text" id="ePhone"></div>
+          <div><label>Email</label><input type="text" id="eEmail"></div>
+        </div>
+        <button id="saveEditBtn" class="primary">Save Changes</button>
+        <p id="editMsg" class="msg"></p>
+      </div>
+    </section>
+
+    <!-- 8. ENQUIRIES -->
+    <section id="enquiries" class="panel">
+      <h2>Handle Enquiries</h2>
+      <div class="card">
+        <div class="row">
+          <input type="text" id="qName" placeholder="Caller or visitor name">
+          <input type="text" id="qText" placeholder="What is the enquiry about?">
+          <button id="addEnquiryBtn" class="primary">Log Enquiry</button>
+        </div>
+        <p id="enquiryMsg" class="msg"></p>
+      </div>
+      <div class="card scroll">
+        <table>
+          <thead><tr><th>From</th><th>Enquiry</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="enquiriesBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+<script src="session.js"></script>
+<script src="receptionist.js"></script>
+<script src="reception2.js"></script>
+</body>
+</html>

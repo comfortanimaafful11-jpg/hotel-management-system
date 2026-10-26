@@ -1,0 +1,208 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #14213d;
+  --navy-light: #1f3358;
+  --gold: #c9a24b;
+  --text: #1c2433;
+  --muted: #6b7587;
+  --border: #d9dee7;
+  --bg: #f4f6fa;
+  --error: #c0392b;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+.page {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ---------- Brand panel ---------- */
+.brand {
+  flex: 1;
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-light) 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.brand-content { max-width: 320px; }
+
+.logo {
+  width: 64px;
+  height: 64px;
+  border: 2px solid var(--gold);
+  color: var(--gold);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.brand h1 { font-size: 34px; letter-spacing: 0.5px; }
+
+.tagline {
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.features { list-style: none; margin-top: 36px; }
+
+.features li {
+  padding: 10px 0 10px 22px;
+  position: relative;
+  color: #d5dbe8;
+  font-size: 15px;
+}
+
+.features li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 8px;
+  height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+}
+
+/* ---------- Form side ---------- */
+.form-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+}
+
+.card {
+  background: #fff;
+  width: 100%;
+  max-width: 400px;
+  padding: 36px 32px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(20, 33, 61, 0.08);
+}
+
+.card h2 { font-size: 24px; }
+
+.subtitle {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 6px 0 24px;
+}
+
+.field { margin-bottom: 18px; }
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus {
+  border-color: var(--navy-light);
+  box-shadow: 0 0 0 3px rgba(31, 51, 88, 0.15);
+}
+
+.password-wrap { position: relative; }
+.password-wrap input { padding-right: 64px; }
+
+.toggle {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--navy-light);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 8px;
+}
+
+.code-input {
+  text-align: center;
+  font-size: 24px;
+  letter-spacing: 10px;
+}
+
+.primary {
+  width: 100%;
+  padding: 13px;
+  background: var(--navy);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.primary:hover { background: var(--navy-light); }
+
+.link {
+  display: block;
+  margin: 16px auto 0;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.link:hover { color: var(--navy); text-decoration: underline; }
+
+.message {
+  min-height: 20px;
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--error);
+}
+
+.footer {
+  margin-top: 22px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.hidden { display: none; }
+
+/* ---------- Phones and small screens ---------- */
+@media (max-width: 800px) {
+  .page { flex-direction: column; }
+  .brand { flex: none; padding: 28px 20px; }
+  .features { display: none; }
+  .brand h1 { font-size: 26px; }
+  .logo { width: 52px; height: 52px; margin-bottom: 14px; }
+}
+
+.qr-box { text-align: center; margin-bottom: 18px; font-size: 13px; color: var(--muted); }
+.qr-box img { border: 1px solid var(--border); border-radius: 8px; padding: 6px; background: #fff; }
+.qr-box code { display: block; margin-top: 6px; padding: 6px 8px; background: var(--bg); border-radius: 6px; word-break: break-all; color: var(--text); }

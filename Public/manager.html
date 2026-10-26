@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manager | Grand Hotel</title>
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="manager.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand">Grand Hotel<small>Manager Panel</small></div>
+    <nav id="nav">
+      <button class="active" data-target="rooms">Room Availability</button>
+      <button data-target="bookings">Monitor Bookings</button>
+      <button data-target="staff">Staff Operations</button>
+      <button data-target="reports">Reports</button>
+      <button data-target="payments">Monitor Payments</button>
+      <button data-target="complaints">Complaints</button>
+      <button data-target="decisions">Decisions</button>
+    </nav>
+    <a href="login.html" class="logout">Log out</a>
+  </aside>
+
+  <main class="content">
+
+    <!-- 1. ROOM AVAILABILITY -->
+    <section id="rooms" class="panel active">
+      <h2>Manage Room Availability</h2>
+      <div class="stats" id="roomStats"></div>
+      <div class="card scroll">
+        <table>
+          <thead><tr><th>Room</th><th>Type</th><th>Price / night</th><th>Status</th></tr></thead>
+          <tbody id="roomsBody"></tbody>
+        </table>
+        <p id="roomMsg" class="msg"></p>
+      </div>
+    </section>
+
+    <!-- 2. BOOKINGS -->
+    <section id="bookings" class="panel">
+      <h2>Monitor Bookings</h2>
+      <div class="card scroll">
+        <select id="bookingFilter">
+          <option value="All">All bookings</option>
+          <option>Confirmed</option>
+          <option>Checked in</option>
+          <option>Checked out</option>
+          <option>Cancelled</option>
+        </select>
+        <table>
+          <thead><tr><th>ID</th><th>Guest</th><th>Room</th><th>Dates</th><th>Status</th></tr></thead>
+          <tbody id="bookingsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. STAFF OPERATIONS -->
+    <section id="staff" class="panel">
+      <h2>Manage Staff Operations</h2>
+      <div class="card">
+        <h3>Assign a task</h3>
+        <div class="row">
+          <select id="taskStaff"></select>
+          <input type="text" id="taskText" placeholder="Task, e.g. Prepare room 204">
+          <select id="taskShift">
+            <option>Morning</option>
+            <option>Afternoon</option>
+            <option>Night</option>
+          </select>
+          <button id="addTaskBtn" class="primary">Assign</button>
+        </div>
+        <p id="taskMsg" class="msg"></p>
+      </div>
+      <div class="card scroll">
+        <table>
+          <thead><tr><th>Staff</th><th>Task</th><th>Shift</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="tasksBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4. REPORTS -->
+    <section id="reports" class="panel">
+      <h2>View Reports</h2>
+      <div class="stats" id="reportStats"></div>
+      <div class="card">
+        <h3>Revenue this week (GHS)</h3>
+        <div id="revenueChart" class="bars"></div>
+      </div>
+    </section>
+
+    <!-- 5. PAYMENTS -->
+    <section id="payments" class="panel">
+      <h2>Monitor Payments</h2>
+      <div class="stats" id="paymentStats"></div>
+      <div class="card scroll">
+        <table>
+          <thead><tr><th>Receipt</th><th>Guest</th><th>Amount</th><th>Method</th><th>Status</th></tr></thead>
+          <tbody id="paymentsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 6. COMPLAINTS -->
+    <section id="complaints" class="panel">
+      <h2>Handle Complaints</h2>
+      <div class="card">
+        <h3>Log a complaint</h3>
+        <div class="row">
+          <select id="cGuest"></select>
+          <input type="text" id="cText" placeholder="What is the complaint?">
+          <button id="addComplaintBtn" class="primary">Log Complaint</button>
+        </div>
+        <p id="logComplaintMsg" class="msg"></p>
+      </div>
+      <div class="card scroll">
+        <table>
+          <thead><tr><th>Guest</th><th>Complaint</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="complaintsBody"></tbody>
+        </table>
+      </div>
+      <div class="card" id="resolveBox" style="display:none">
+        <h3 id="resolveTitle">Resolve complaint</h3>
+        <label for="resolveNote">What action was taken?</label>
+        <textarea id="resolveNote" rows="3"></textarea>
+        <button id="resolveBtn" class="primary">Mark as Resolved</button>
+        <p id="complaintMsg" class="msg"></p>
+      </div>
+    </section>
+
+    <!-- 7. DECISIONS -->
+    <section id="decisions" class="panel">
+      <h2>Make Decisions</h2>
+      <div class="card">
+        <h3>New request for a decision</h3>
+        <div class="row">
+          <input type="text" id="dText" placeholder="e.g. Give a 10% discount to a returning guest">
+          <button id="addDecisionBtn" class="primary">Submit Request</button>
+        </div>
+        <p id="decisionMsg" class="msg"></p>
+      </div>
+      <div class="card scroll">
+        <h3>Requests waiting for a decision</h3>
+        <table>
+          <thead><tr><th>Request</th><th>From</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="decisionsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+<script src="session.js"></script>
+<script src="manager.js"></script>
+<script src="manager2.js"></script>
+</body>
+</html>

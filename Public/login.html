@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Login | Grand Hotel Management System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+
+    <!-- Left side: branding -->
+    <section class="brand">
+      <div class="brand-content">
+        <div class="logo">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v14"></path>
+            <path d="M15 11h4a2 2 0 0 1 2 2v8"></path>
+            <path d="M3 21h18"></path>
+            <path d="M7 9h4M7 13h4M7 17h4"></path>
+          </svg>
+        </div>
+        <h1>Grand Hotel</h1>
+        <p class="tagline">Management System</p>
+        <ul class="features">
+          <li>Secure staff access</li>
+          <li>Two-factor authentication</li>
+          <li>Role-based permissions</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Right side: forms -->
+    <section class="form-side">
+      <div class="card">
+
+        <!-- STEP 1 -->
+        <form id="loginForm" novalidate>
+          <h2>Welcome back</h2>
+          <p class="subtitle">Sign in to your staff account</p>
+
+          <div class="field">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Enter your username" autocomplete="username" required>
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <div class="password-wrap">
+              <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password" required>
+              <button type="button" id="togglePassword" class="toggle" aria-label="Show password">Show</button>
+            </div>
+          </div>
+
+          <button type="submit" class="primary">Sign In</button>
+        </form>
+
+        <!-- STEP 2 -->
+        <form id="twoFaForm" class="hidden" novalidate>
+  <h2>Verify your identity</h2>
+  <p id="twoFaHelp" class="subtitle">Enter the 6-digit code from your authenticator app</p>
+
+  <div id="setupBox" class="qr-box hidden">
+    <img id="qrImg" alt="QR code for your authenticator app" width="180" height="180">
+    <p>Can't scan? Type this key into the app:</p>
+    <code id="manualKey"></code>
+  </div>
+
+  <div class="field">
+    <label for="code">Verification code</label>
+    <input type="text" id="code" class="code-input" maxlength="6" inputmode="numeric" placeholder="000000" autocomplete="one-time-code" required>
+  </div>
+
+  <button type="submit" class="primary">Verify and Continue</button>
+  <button type="button" id="backBtn" class="link">Back to sign in</button>
+</form>
+
+<p id="message" class="message" role="alert"></p>
+      </div>
+
+      <p class="footer">&copy; 2026 Grand Hotel. Authorized staff only.</p>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

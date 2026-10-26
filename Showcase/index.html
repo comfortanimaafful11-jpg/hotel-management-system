@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grand Hotel Management System | Project Showcase</title>
+<style>
+  :root { --navy:#14213d; --navy2:#1f3358; --gold:#c9a24b; --text:#1c2433; --muted:#6b7587; --border:#d9dee7; --bg:#f4f6fa; --green:#1e8449; --red:#c0392b; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:"Segoe UI",Roboto,Arial,sans-serif; background:var(--bg); color:var(--text); }
+  header { background:linear-gradient(160deg,var(--navy),var(--navy2)); color:#fff; padding:26px 20px; }
+  header h1 { font-size:24px; }
+  header p { color:var(--gold); letter-spacing:2px; text-transform:uppercase; font-size:12px; margin-top:6px; }
+  .notice { background:#fdf0d0; color:#6b4a00; padding:10px 20px; font-size:14px; }
+  nav { display:flex; gap:6px; flex-wrap:wrap; padding:14px 20px; background:#fff; border-bottom:1px solid var(--border); }
+  nav button { border:1px solid var(--border); background:#fff; padding:9px 14px; border-radius:8px; cursor:pointer; font-size:14px; }
+  nav button.active { background:var(--navy); color:#fff; border-color:var(--navy); }
+  main { max-width:980px; margin:0 auto; padding:22px 16px; }
+  section { display:none; }
+  section.active { display:block; }
+  h2 { margin-bottom:14px; }
+  h3 { margin-bottom:10px; font-size:16px; }
+  .card { background:#fff; border-radius:12px; padding:20px; margin-bottom:18px; box-shadow:0 6px 20px rgba(20,33,61,.06); }
+  .scroll { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th { text-align:left; background:var(--bg); padding:9px 10px; font-size:12px; text-transform:uppercase; color:var(--muted); }
+  td { padding:9px 10px; border-bottom:1px solid var(--border); vertical-align:top; }
+  code { background:var(--bg); padding:2px 6px; border-radius:5px; font-size:12px; word-break:break-all; }
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:18px; }
+  .stat { background:#fff; border-radius:12px; padding:16px; border-top:4px solid var(--gold); box-shadow:0 6px 20px rgba(20,33,61,.06); }
+  .stat span { display:block; font-size:12px; color:var(--muted); text-transform:uppercase; }
+  .stat strong { display:block; font-size:24px; margin-top:6px; }
+  .bars { display:flex; align-items:flex-end; gap:12px; height:190px; }
+  .bar-col { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; }
+  .bar { width:100%; max-width:46px; background:var(--navy); border-radius:6px 6px 0 0; }
+  .bar-col small { margin-top:6px; font-size:12px; color:var(--muted); }
+  .bar-col em { font-style:normal; font-size:11px; margin-bottom:4px; }
+  label { display:block; font-size:13px; font-weight:600; margin:12px 0 6px; }
+  input { width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:8px; font-size:14px; }
+  button.primary { margin-top:14px; padding:10px 18px; background:var(--navy); color:#fff; border:none; border-radius:8px; font-weight:600; cursor:pointer; }
+  .step { padding:10px 12px; border-left:4px solid var(--gold); background:var(--bg); margin-bottom:8px; border-radius:6px; font-size:14px; }
+  .step b { display:block; margin-bottom:4px; }
+  .ok { color:var(--green); font-weight:600; }
+  .bad { color:var(--red); font-weight:600; }
+  ul { padding-left:20px; line-height:1.7; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Grand Hotel Management System</h1>
+  <p>Project showcase</p>
+</header>
+<div class="notice"><b>Demo data only.</b> Everything on this page is fictional. The real system runs on a local server with a private MySQL database, and its real pepper, keys and passwords are never published.</div>
+
+<nav id="tabs">
+  <button class="active" data-tab="reports">Reports</button>
+  <button data-tab="users">Users</button>
+  <button data-tab="hashing">Salt &amp; Pepper</button>
+  <button data-tab="login">Try a login</button>
+  <button data-tab="security">Security design</button>
+</nav>
+
+<main>
+
+  <section id="reports" class="active">
+    <h2>Reports (sample data)</h2>
+    <div class="stats" id="repStats"></div>
+    <div class="card"><h3>Revenue this week (GHS)</h3><div class="bars" id="chart"></div></div>
+    <div class="card scroll">
+      <h3>Recent bookings</h3>
+      <table>
+        <thead><tr><th>Booking</th><th>Guest</th><th>Room</th><th>Stay</th><th>Total</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>B-1001</td><td>John Smith</td><td>204</td><td>12 to 15 Oct</td><td>GHS 2,700</td><td>Checked in</td></tr>
+          <tr><td>B-1002</td><td>Akosua Darko</td><td>108</td><td>13 to 14 Oct</td><td>GHS 500</td><td>Checked out</td></tr>
+          <tr><td>B-1003</td><td>Yaw Asante</td><td>301</td><td>16 to 18 Oct</td><td>GHS 1,800</td><td>Confirmed</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="users">
+    <h2>Users (demo accounts)</h2>
+    <div class="card">
+      <p>Demo pepper (a secret shared by all users; in the real system it lives only in <code>.env</code>): <code id="pepperShow"></code></p>
+    </div>
+    <div class="card scroll">
+      <table>
+        <thead><tr><th>Username</th><th>Role</th><th>Demo password</th><th>Salt (random, per user)</th><th>Stored hash</th></tr></thead>
+        <tbody id="usersBody"></tbody>
+      </table>
+      <p style="margin-top:12px;color:#6b7587;font-size:13px">In the real database only the salt and the hash are stored. The password itself is never saved. Demo passwords are shown here only so you can try the login demo.</p>
+    </div>
+  </section>
+
+  <section id="hashing">
+    <h2>Salt &amp; Pepper, step by step</h2>
+    <div class="card">
+      <label for="hPassword">Type any password</label>
+      <input id="hPassword" type="text" value="Demo-Admin#2026">
+      <label for="hSalt">Salt (hex)</label>
+      <input id="hSalt" type="text">
+      <button class="primary" id="newSalt">Use a new random salt</button>
+    </div>
+    <div class="card" id="hSteps"></div>
+  </section>
+
+  <section id="login">
+    <h2>Try a login</h2>
+    <div class="card">
+      <p style="margin-bottom:6px">Use a demo account from the Users tab.</p>
+      <label for="lgUser">Username</label>
+      <input id="lgUser" type="text" value="eowusu">
+      <label for="lgPass">Password</label>
+      <input id="lgPass" type="password">
+      <button class="primary" id="lgBtn">Sign in</button>
+    </div>
+    <div class="card" id="lgOut"></div>
+  </section>
+
+  <section id="security">
+    <h2>Security design</h2>
+    <div class="card">
+      <ul>
+        <li><b>Passwords:</b> peppered with HMAC-SHA256, then salted and hashed with scrypt (this page uses PBKDF2, because browsers have no scrypt).</li>
+        <li><b>Two-factor login:</b> a 6-digit authenticator code; the secrets are encrypted with AES-256-GCM.</li>
+        <li><b>Roles and permissions:</b> Admin, Manager and Receptionist, enforced by the server from a permissions table.</li>
+        <li><b>SQL injection protection:</b> every query is parameterized.</li>
+        <li><b>Lockout and rate limiting:</b> 5 wrong passwords lock the account for 15 minutes.</li>
+        <li><b>Audit log:</b> every action is recorded, and database triggers block edits and deletes.</li>
+        <li><b>Deleted-data database:</b> removed records are copied to a separate database first.</li>
+        <li><b>Backups:</b> encrypted, sealed with a SHA-256 checksum, uploaded to the cloud by API.</li>
+        <li><b>Restore points:</b> save and restore settings only, never guest or booking data.</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<script>
+const PEPPER = "DEMO-PEPPER-not-the-real-one-2026";
+const ITERATIONS = 100000;
+const enc = new TextEncoder();
+const $ = id => document.getElementById(id);
+const hex = buf => Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+const fromHex = h => new Uint8Array(h.match(/.{2}/g).map(b => parseInt(b, 16)));
+const randomSalt = () => hex(crypto.getRandomValues(new Uint8Array(16)));
+
+const USERS = [
+  { username: "amensah",  role: "Admin",        password: "Demo-Admin#2026",     salt: "a3f1c9d27b4e8a60d5c2193fe7b84a01" },
+  { username: "kboateng", role: "Manager",      password: "Demo-Manager#2026",   salt: "7e20b6c4915d3fa8e0b7c26d49a1f853" },
+  { username: "eowusu",   role: "Receptionist", password: "Demo-Reception#2026", salt: "c58d04e1a9f27b36d1e8405ab7c93f2e" }
+];
+
+async function pepperStep(password) {
+  const key = await crypto.subtle.importKey("raw", enc.encode(PEPPER), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  return crypto.subtle.sign("HMAC", key, enc.encode(password));
+}
+
+async function hashPassword(password, saltHex) {
+  const peppered = await pepperStep(password);
+  const key = await crypto.subtle.importKey("raw", peppered, "PBKDF2", false, ["deriveBits"]);
+  const bits = await crypto.subtle.deriveBits(
+    { name: "PBKDF2", hash: "SHA-256", salt: fromHex(saltHex), iterations: ITERATIONS }, key, 256);
+  return { peppered: hex(peppered), hash: hex(bits) };
+}
+
+async function plainSha256(password) {
+  return hex(await crypto.subtle.digest("SHA-256", enc.encode(password)));
+}
+
+function step(title, value) {
+  const div = document.createElement("div");
+  div.className = "step";
+  const b = document.createElement("b");
+  b.textContent = title;
+  div.appendChild(b);
+  if (value !== undefined) {
+    const code = document.createElement("code");
+    code.textContent = value;
+    div.appendChild(code);
+  }
+  return div;
+}
+
+// ---------- Tabs ----------
+$("tabs").addEventListener("click", e => {
+  const btn = e.target.closest("button");
+  if (!btn) return;
+  document.querySelectorAll("#tabs button").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll("main section").forEach(s => s.classList.remove("active"));
+  btn.classList.add("active");
+  $(btn.dataset.tab).classList.add("active");
+});
+
+// ---------- Reports ----------
+function renderReports() {
+  const week = [["Mon", 4200], ["Tue", 3800], ["Wed", 5100], ["Thu", 4600], ["Fri", 6900], ["Sat", 7400], ["Sun", 5200]];
+  const total = week.reduce((s, d) => s + d[1], 0);
+  const box = (label, value) => `<div class="stat"><span>${label}</span><strong>${value}</strong></div>`;
+  $("repStats").innerHTML =
+    box("Revenue (7 days)", "GHS " + total.toLocaleString()) + box("Occupancy now", "67%") +
+    box("Bookings", "24") + box("Open complaints", "2");
+  const max = Math.max(...week.map(d => d[1]));
+  $("chart").innerHTML = week.map(d =>
+    `<div class="bar-col"><em>${d[1]}</em><div class="bar" style="height:${Math.round(d[1] / max * 140)}px"></div><small>${d[0]}</small></div>`).join("");
+}
+
+// ---------- Users ----------
+async function renderUsers() {
+  $("pepperShow").textContent = PEPPER;
+  for (const u of USERS) u.hash = (await hashPassword(u.password, u.salt)).hash;
+  $("usersBody").innerHTML = USERS.map(u =>
+    `<tr><td>${u.username}</td><td>${u.role}</td><td><code>${u.password}</code></td><td><code>${u.salt}</code></td><td><code>${u.hash}</code></td></tr>`).join("");
+}
+
+// ---------- Salt and pepper walkthrough ----------
+async function renderHashing() {
+  const pw = $("hPassword").value;
+  const salt = $("hSalt").value.trim();
+  const box = $("hSteps");
+  box.textContent = "";
+  if (!pw) { box.appendChild(step("Type a password above.")); return; }
+  if (!/^([0-9a-f]{2})+$/i.test(salt)) { box.appendChild(step("The salt must be hex characters (0-9, a-f) in pairs.")); return; }
+
+  const weak = await plainSha256(pw);
+  const r = await hashPassword(pw, salt);
+  box.appendChild(step("Weak way: plain SHA-256, no salt, no pepper. The same for everyone who picks this password, so it can be looked up in tables of known hashes.", weak));
+  box.appendChild(step("1. The password you typed (never stored)", pw));
+  box.appendChild(step("2. The pepper (secret, same for every user, kept outside the database)", PEPPER));
+  box.appendChild(step("3. Mix them: HMAC-SHA256(password, pepper)", r.peppered));
+  box.appendChild(step("4. The salt (random, different for each user, stored in the database)", salt));
+  box.appendChild(step("5. Slow hash: PBKDF2-SHA256, " + ITERATIONS.toLocaleString() + " rounds, using the salt. This is what the database stores.", r.hash));
+}
+$("hPassword").addEventListener("input", renderHashing);
+$("hSalt").addEventListener("input", renderHashing);
+$("newSalt").addEventListener("click", () => { $("hSalt").value = randomSalt(); renderHashing(); });
+
+// ---------- Login demonstration ----------
+$("lgBtn").addEventListener("click", async () => {
+  const out = $("lgOut");
+  out.textContent = "";
+  const user = USERS.find(u => u.username === $("lgUser").value.trim());
+  const pw = $("lgPass").value;
+  if (!pw) { out.appendChild(step("Enter a password.")); return; }
+
+  if (!user) {
+    await hashPassword(pw, "00".repeat(16));   // same work, so timing does not reveal the username
+    const d = step("Invalid username or password.");
+    d.firstChild.className = "bad";
+    out.appendChild(d);
+    out.appendChild(step("The message is the same for a wrong username and a wrong password, so attackers cannot discover which usernames exist."));
+    return;
+  }
+
+  const r = await hashPassword(pw, user.salt);
+  const good = r.hash === user.hash;
+  const d = step(good ? "Password accepted." : "Invalid username or password.");
+  d.firstChild.className = good ? "ok" : "bad";
+  out.appendChild(d);
+  out.appendChild(step("Hash of what you typed (using this user's salt and the pepper)", r.hash));
+  out.appendChild(step("Hash stored for this user", user.hash));
+  if (good) out.appendChild(step("In the real system, a 6-digit authenticator code is required next, and only then is a session started."));
+});
+
+// ---------- Start ----------
+renderReports();
+renderUsers();
+$("hSalt").value = USERS[0].salt;
+renderHashing();
+</script>
+</body>
+</html>

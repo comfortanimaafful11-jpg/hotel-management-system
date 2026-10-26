@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin | Grand Hotel</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand">Grand Hotel<small>Admin Panel</small></div>
+    <nav id="nav">
+      <button class="active" data-target="users">Manage Users</button>
+      <button data-target="roles">Roles &amp; Permissions</button>
+      <button data-target="hotel">Hotel Information</button>
+      <button data-target="records">All Records</button>
+      <button data-target="activity">System Activity</button>
+      <button data-target="security">Security</button>
+      <button data-target="backup">Backup &amp; Maintenance</button>
+    </nav>
+    <a href="login.html" class="logout">Log out</a>
+  </aside>
+
+  <main class="content">
+
+    <!-- 1. MANAGE USERS -->
+    <section id="users" class="panel active">
+      <h2>Manage User Accounts</h2>
+      <div class="card">
+        <h3>Add new user</h3>
+        <div class="row">
+          <input type="text" id="newName" placeholder="Full name">
+          <input type="text" id="newUsername" placeholder="Username (no spaces)">
+          <input type="password" id="newPassword" placeholder="Starting password">
+          <select id="newRole">
+            <option>Manager</option>
+            <option selected>Receptionist</option>
+            <option>Admin</option>
+          </select>
+          <button id="addUserBtn" class="primary">Add User</button>
+        </div>
+        <p class="msg" style="color:#6b7587">Password: 10+ characters with upper, lower, number and symbol. The person links their authenticator app the first time they sign in.</p>
+        <p id="userMsg" class="msg"></p>
+      </div>
+      <div class="card scroll">
+        <table>
+          <thead><tr><th>Name</th><th>Username</th><th>Role</th><th>Status</th><th>2FA</th><th>Actions</th></tr></thead>
+          <tbody id="usersBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 2. ROLES & PERMISSIONS -->
+    <section id="roles" class="panel">
+      <h2>Assign Roles &amp; Permissions</h2>
+      <div class="card scroll">
+        <table>
+          <thead><tr><th>Permission</th><th>Admin</th><th>Manager</th><th>Receptionist</th></tr></thead>
+          <tbody id="rolesBody"></tbody>
+        </table>
+        <button id="savePerms" class="primary">Save Permissions</button>
+        <p id="permMsg" class="msg"></p>
+      </div>
+    </section>
+
+    <!-- 3. HOTEL INFORMATION -->
+    <section id="hotel" class="panel">
+      <h2>Hotel Information</h2>
+      <div class="card">
+        <div class="grid">
+          <div><label>Hotel name</label><input type="text" id="hName" value="Grand Hotel"></div>
+          <div><label>Phone</label><input type="text" id="hPhone" value="+233 00 000 0000"></div>
+          <div><label>Email</label><input type="text" id="hEmail" value="info@grandhotel.com"></div>
+          <div><label>Address</label><input type="text" id="hAddress" value="Accra, Ghana"></div>
+          <div><label>Check-in time</label><input type="time" id="hIn" value="14:00"></div>
+          <div><label>Check-out time</label><input type="time" id="hOut" value="11:00"></div>
+        </div>
+        <button id="saveHotel" class="primary">Save Information</button>
+        <p id="hotelMsg" class="msg"></p>
+      </div>
+    </section>
+
+    <!-- 4. ALL RECORDS -->
+    <section id="records" class="panel">
+      <h2>View All Records</h2>
+      <div class="card scroll">
+        <select id="recordType">
+                   <option value="guests">Guests</option>
+          <option value="bookings">Bookings</option>
+          <option value="payments">Payments</option>
+          <option value="deleted">Deleted records</option>
+        </select>
+        <table>
+          <thead id="recordsHead"></thead>
+          <tbody id="recordsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 5. SYSTEM ACTIVITY -->
+    <section id="activity" class="panel">
+      <h2>Monitor System Activity</h2>
+      <div class="card scroll">
+        <div class="row">
+          <select id="activityFilter">
+            <option value="">All activity</option>
+            <option value="Failed">Failed only</option>
+            <option value="Success">Successful only</option>
+          </select>
+          <button id="activityRefresh" class="primary">Refresh</button>
+        </div>
+        <p id="activityMsg" class="msg"></p>
+        <table>
+          <thead><tr><th>Time</th><th>User</th><th>Action</th><th>Details</th><th>IP</th><th>Result</th></tr></thead>
+          <tbody id="activityBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 6. SECURITY -->
+    <section id="security" class="panel">
+      <h2>Maintain Security</h2>
+      <div class="card">
+        <label class="check"><input type="checkbox" id="sec2fa" checked> Require two-factor authentication for all staff</label>
+        <label>Lock account after failed attempts</label>
+        <input type="number" id="secAttempts" value="5" min="3" max="10">
+        <label>Session timeout (minutes)</label>
+        <input type="number" id="secTimeout" value="15" min="5" max="120
+       <input type="number" id="secTimeout" value="15" min="5" max="120">
+        <label>Minimum password length</label>
+        <input type="number" id="secLength" value="10" min="8" max="32">
+        <button id="saveSecurity" class="primary">Save Security Settings</button>
+        <p id="secMsg" class="msg"></p>
+      </div>
+      <div class="card scroll">
+        <h3>Locked accounts</h3>
+        <table>
+          <thead><tr><th>Username</th><th>Reason</th><th>Action</th></tr></thead>
+          <tbody id="lockedBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+        <!-- 7. BACKUP -->
+    <section id="backup" class="panel">
+      <h2>Backup &amp; System Maintenance</h2>
+      <div class="card">
+        <h3>Encrypted backup</h3>
+        <p class="msg" style="color:#6b7587">Backups are encrypted, sealed with a checksum, and saved in the server's backups folder. One also runs automatically every 24 hours.</p>
+        <button id="backupBtn" class="primary">Back Up Now</button>
+        <p id="backupMsg" class="msg"></p>
+      </div>
+      <div class="card scroll">
+        <h3>Backup history</h3>
+        <table>
+          <thead><tr><th>Date</th><th>Type</th><th>File</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="backupBody"></tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Restore points (settings only)</h3>
+        <p class="msg" style="color:#6b7587">A restore point saves hotel information, security settings and permissions. Restoring one never changes guests, bookings, payments or accounts.</p>
+        <div class="row">
+          <input type="text" id="rpLabel" placeholder="Label, e.g. Before changing permissions">
+          <button id="rpCreateBtn" class="primary">Create Restore Point</button>
+        </div>
+        <p id="rpMsg" class="msg"></p>
+      </div>
+      <div class="card scroll">
+        <table>
+          <thead><tr><th>Date</th><th>Label</th><th>Action</th></tr></thead>
+          <tbody id="rpBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+<script src="session.js"></script>
+<script src="admin.js"></script>
+<script src="users.js"></script>
+<script src="activity.js"></script>
+<script src="admin2.js"></script>
+<script src="backup.js"></script>
+</body>
+</html>
